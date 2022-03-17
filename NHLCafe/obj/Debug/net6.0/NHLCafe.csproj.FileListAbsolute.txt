@@ -24,3 +24,14 @@ C:\Users\Dennis\Documents\NHLCafe\obj\Debug\net6.0\refint\NHLCafe.dll
 C:\Users\Dennis\Documents\NHLCafe\obj\Debug\net6.0\NHLCafe.pdb
 C:\Users\Dennis\Documents\NHLCafe\obj\Debug\net6.0\NHLCafe.genruntimeconfig.cache
 C:\Users\Dennis\Documents\NHLCafe\obj\Debug\net6.0\ref\NHLCafe.dll
+C:\Users\denni\Documents\GitHub\NHLCafe\NHLCafe\obj\Debug\net6.0\NHLCafe.csproj.AssemblyReference.cache
+C:\Users\denni\Documents\GitHub\NHLCafe\NHLCafe\obj\Debug\net6.0\NHLCafe.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\denni\Documents\GitHub\NHLCafe\NHLCafe\obj\Debug\net6.0\NHLCafe.AssemblyInfoInputs.cache
+C:\Users\denni\Documents\GitHub\NHLCafe\NHLCafe\obj\Debug\net6.0\NHLCafe.AssemblyInfo.cs
+C:\Users\denni\Documents\GitHub\NHLCafe\NHLCafe\obj\Debug\net6.0\NHLCafe.csproj.CoreCompileInputs.cache
+C:\Users\denni\Documents\GitHub\NHLCafe\NHLCafe\obj\Debug\net6.0\NHLCafe.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\denni\Documents\GitHub\NHLCafe\NHLCafe\obj\Debug\net6.0\NHLCafe.RazorAssemblyInfo.cache
+C:\Users\denni\Documents\GitHub\NHLCafe\NHLCafe\obj\Debug\net6.0\NHLCafe.RazorAssemblyInfo.cs
+C:\Users\denni\Documents\GitHub\NHLCafe\NHLCafe\obj\Debug\net6.0\NHLCafe.dll
+C:\Users\denni\Documents\GitHub\NHLCafe\NHLCafe\obj\Debug\net6.0\ref\NHLCafe.dll
+C:\Users\denni\Documents\GitHub\NHLCafe\NHLCafe\obj\Debug\net6.0\NHLCafe.pdb
