@@ -6,10 +6,26 @@
 }
 <body>
 <div>
-    <form id="register">
-        <input type="text" id="UserName" placeholder="UserName"/>
-        <input type="password" id="Password" placeholder="Password"/>
-        <button type="submit" id="Register">Registreer</button>
+    <form id="register" asp-page-handler="Register">
+        Username: <input type="text" id="UserName" placeholder="UserName" asp-for="NewCafeUser.UserName"/><br/>
+        Password: <input type="password" id="Password" placeholder="Password" asp-for="NewCafeUser.Password"/><br/>
+        Passwords must contain at least 6 characters<br/>
+        Confirm Password: <input type="password" id="confirmPassword" placeholder="Confirm Password" asp-for="PasswordConfirm"/><br/>
+        Choose Work Location: <select id="Location" asp-for="NewCafeUser.Location">
+            <option value="Leeuwarden">leeuwarden</option>
+            <option value="Drachten">Drachten</option>
+            <option value="Heerenveen">Heerenveen</option>
+        </select><br/>
+        <button type="submit">Registreer</button>
     </form>
+    
+    
+    @{
+
+        if (@Model.PasswordSame == false)
+        {
+            <script>alert("Passwords did not match and/or was not long enough!\nPlease try again")</script>;
+        }
+    }
 </div>
 </body>

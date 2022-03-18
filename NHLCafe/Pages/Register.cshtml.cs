@@ -1,23 +1,40 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Data;
+using System.Reflection.Metadata;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NHLCafe.Pages.Repository;
 using NHLCafe.Pages.Models;
-
+using MySql.Data.MySqlClient;
+using Dapper;
 namespace NHLCafe.Pages;
 
-public class Register : PageModel
-
-    private MySqlConnection Connect()
-    {
-        return new MySqlConnection("Server=24.132.196.32;Database=alternatief;Uid=DBAdmin;Pwd=Password12345!;Port=3306");
-    }
+public class Register : PageModel{
+    
+    [BindProperty] public CafeUser NewCafeUser { get; set; }
+    [BindProperty] public string PasswordConfirm { get; set; }
+    [BindProperty] public bool PasswordSame { get; set; } = true;
     public void OnGet()
     {
         
     }
 
-    public void OnPost([FromForm] string UserName, [FromForm] string Password)
+    public IActionResult OnPostRegister()
     {
-        StaticUserRepository.AddUser(new CafeUser());
+        NewCafeUser.UniqueGuid = Guid.NewGuid();
+        NewCafeUser.Date = DateTime.Today;
+
+        if (NewCafeUser.Password == PasswordConfirm && PasswordConfirm.Length >= 6)
+        {
+            var addCafeUser = new SqlBestand().AddCafeUser(NewCafeUser);
+            return new RedirectToPageResult("Login");
+        }
+        else
+        {
+            PasswordSame = false;
+        }
+        
+        return null;
+
     }
 }

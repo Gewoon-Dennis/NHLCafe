@@ -5,3 +5,13 @@
     ViewData["Title"] = "Account Overview";
 }
 
+@{
+    <ul>
+        <li>Id: @Model.Ingelogde.UniqueGuid</li>
+        <li>UserName: @Model.Ingelogde.UserName</li>
+        <li>Password: @Model.Ingelogde.Password</li>
+        <li>Location: @Model.Ingelogde.Location</li>
+        <li>Date: @Model.Ingelogde.Date</li>
+    </ul>
+            
+}
