@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NHLCafe.Pages.Repository;
-using NHLCafe.Pages.Models;
+
 
 namespace NHLCafe.Pages;
 
@@ -10,16 +10,31 @@ public class Login : PageModel
 {
     [BindProperty] public string UserName { get; set; }
     [BindProperty] public string Password { get; set; }
-    [BindProperty] public List<CafeUser> Ingelogde { get; set; }
+    public static bool LoggedIn = false;
+    
 
-    public void OnGet()
+    public RedirectToPageResult OnGet()
     {
-        Ingelogde = new SqlBestand().GetCafeUser("Test", "123456");
+       string LoginCheck = HttpContext.Session.GetString("LogIn");
+       if (LoginCheck != null)
+       {
+           LoggedIn = true;
+           return new RedirectToPageResult("AccountOverview");
+       }
+
+       return null;
     }
-    public void OnPostLogin()
+    public RedirectToPageResult OnPostLogin()
     {
-        Ingelogde = new SqlBestand().GetCafeUser(UserName, Password);
-        
+        string login  = new SqlBestand().GetCafeUser(UserName, Password);
+        if (login != null)
+        {
+            LoggedIn = true;
+            HttpContext.Session.SetString("LogIn", login);
+            return new RedirectToPageResult("AccountOverview");
+        }
+
+        return null;
     }
     
 }

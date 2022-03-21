@@ -5,24 +5,11 @@
     ViewData["Title"] = "Login page";
 }
 
-        <form method="post" asp-page-handler="Login">
-            <input type="text" id="UserName" placeholder="UserName" asp-for="@Model.UserName"/><br/>
-            <input type="password" id="Password" placeholder="Password" asp-for="@Model.Password"/><br/>
-            <button type="submit" id="login">Login</button>
-        </form>
+<form method="post" asp-page-handler="Login">
+    <input type="text" id="UserName" placeholder="UserName" asp-for="@Model.UserName"/><br/>
+    <input type="password" id="Password" placeholder="Password" asp-for="@Model.Password"/><br/>
+    <button type="submit" id="login">Login</button>
+</form>
+
         
-        @{
-            foreach (var pinda in Model.Ingelogde)
-    {
-
-
-        <ul>
-            <li>Id : @pinda.UniqueGuid</li>
-            <li>UserName: @pinda.UserName</li>
-            <li>Password: @pinda.Password</li>
-            <li>Location: @pinda.Location</li>
-            <li>Date: @pinda.Date</li>
-        </ul>
-    }
-
-        }
+        

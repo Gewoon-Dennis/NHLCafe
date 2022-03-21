@@ -31,13 +31,31 @@ public class SqlBestand
         return connection.Query<CafeUser>("SELECT FROM cafeuser * WHERE CafeUser_id = LAST_INSERT_ID");
     }
 
-    public List<CafeUser> GetCafeUser(string username, string password)
+    public string GetCafeUser(string username, string password)
+         {
+             using var connection = Connect();
+             string UserId= connection.QuerySingleOrDefault<string>(
+                 @"SELECT CafeUser_id FROM cafeuser WHERE CafeUser_name = @UserName AND CafeUser_password = @Password"
+                 , new {UserName = username, Password = password});
+             return UserId;
+     
+         }
+    public string CafeUsername(string UserId)
     {
         using var connection = Connect();
-        var User= connection.Query(
-            @"SELECT * FROM cafeuser WHERE CafeUser_name = @UserName AND CafeUser_password = @Password"
-            , new {UserName = username, Password = password});
-        return User as List<CafeUser>;
+        string UserName= connection.QuerySingleOrDefault<string>(
+            @"SELECT CafeUser_name FROM cafeuser WHERE CafeUser_id = @userId"
+            , new {userId = UserId});
+        return UserName;
+
+    }
+    public string CafeUserWorkplace(string UserId)
+    {
+        using var connection = Connect();
+        string location= connection.QuerySingleOrDefault<string>(
+            @"SELECT location FROM cafeuser WHERE CafeUser_id = @userId"
+            , new {userId = UserId});
+        return location;
 
     }
 }

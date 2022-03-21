@@ -4,14 +4,38 @@
 @{
     ViewData["Title"] = "Account Overview";
 }
-
-@{
-    <ul>
-        <li>Id: @Model.Ingelogde.UniqueGuid</li>
-        <li>UserName: @Model.Ingelogde.UserName</li>
-        <li>Password: @Model.Ingelogde.Password</li>
-        <li>Location: @Model.Ingelogde.Location</li>
-        <li>Date: @Model.Ingelogde.Date</li>
-    </ul>
-            
-}
+<div>
+    <div class="container border" style="padding: 20px">
+        <div class="row">
+            <div class="col-2">
+                <label>user-id: </label>
+            </div>
+            <div class="col-4">
+                <label>@Model.OberId</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label>Username: </label>
+            </div>
+            <div class="col-4">
+                <label>@Model.OberName</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label>Workplace: </label>
+            </div>
+            <div class="col-4">
+                <label>@Model.OberWorkplace</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <form method="post" asp-page-handler="Print">
+                    <button type="submit" class="btn btn-outline-primary">Print</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

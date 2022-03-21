@@ -19,15 +19,22 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Register">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-page="/Bestellen">Order</a></li>
+                        @if (Login.LoggedIn == false)
+                            {
+                                <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-page="/Register">Register</a> </li>
+                                <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a></li>
+                                <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-page="/Login">Account</a></li>
+                            }
+                            else
+                            {
+                                <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-page="/Bestellen">Order</a></li>
+                                <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-page="/AccountOverview">Account</a></li>
+                                <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-page="/Logout">Logout</a></li>
+                            }
+                        
                     </ul>
                 </div>
             </div>
