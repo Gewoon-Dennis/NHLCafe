@@ -4,66 +4,96 @@
 @{
     ViewData["Title"] = "Register page";
 }
+<link rel="stylesheet" href="~/css/cardcss.css" asp-append-version="true"/>
+
+<script>
+    var passConfirm = function() {
+        if (document.getElementById("Password").value ==
+            document.getElementById("confirmPassword").value) {
+                document.getElementById("Message").style.color = "Green";
+                document.getElementById("Message").innerHTML = "Passwords match!"
+                document.getElementById("registreer").disabled = false
+            } else {
+                document.getElementById("Message").style.color = "Red";
+                document.getElementById("Message").innerHTML = "Passwords do NOT match!"
+                document.getElementById("registreer").disabled = true
+                }
+    }
+</script>
+
 <body>
 <div>
-    <div class="container border" style="padding: 20px">
+    <div class="container border rounded" style="padding: 20px">
     <form id="register" asp-page-handler="Register">
         <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-        <div class="form-group row">
+        <div class="form-group row" id="spacing">
             <div class="col-2">
-                <label asp-for="@Model.NewCafeUser.UserName"></label>
+                <label>Gebruikersnaam:</label>
             </div>
             <div class="col-4">
-                <input type="text" id="UserName" placeholder="UserName" asp-for="NewCafeUser.UserName"/>
+                <input type="text" id="UserName" placeholder="UserName" required="required" asp-for="NewCafeUser.UserName"/>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row"  id="spacing">
             <div class="col-2">
-                <label asp-for="@Model.NewCafeUser.Password"></label>
+                <label>E-mail:</label>
             </div>
             <div class="col-4">
-                <input type="password" id="Password" placeholder="Password" asp-for="NewCafeUser.Password"/>
+                <input type="email" id="E-mail" placeholder="E-Mail" required="required" asp-for="NewCafeUser.Email"/>
             </div>
         </div>
-        <div class="form-group row">
-            Passwords must contain at least 6 characters
-        </div>
-        <div class="form-group row">
+        <div class="form-group row"  id="spacing">
+                    <div class="col-2">
+                        <label>Workplace:</label>
+                    </div>
+                    <div class="col-4">
+                        <select id="Location" asp-for="NewCafeUser.Location">
+                            <option value="Leeuwarden">Leeuwarden</option>
+                            <option value="Drachten">Drachten</option>
+                            <option value="Heerenveen">Heerenveen</option>
+                        </select>
+                    </div>
+                </div>
+        <div class="form-group row"  id="spacing">
             <div class="col-2">
-                <label>Confirm Password</label>
+                <label>Password: </label>
             </div>
             <div class="col-4">
-                <input type="password" id="confirmPassword" placeholder="Confirm Password" asp-for="PasswordConfirm"/>
+                <input type="password" 
+                       onkeyup="passConfirm();" 
+                       name="Password"
+                       id="Password" 
+                       minlength="6" 
+                       placeholder="Password" 
+                       required="required" 
+                       asp-for="Password"/>
             </div>
         </div>
-        <div class="form-group row">
+       <div class="form-group row"  id="spacing">
             <div class="col-2">
-                <label>Choose WorkSpace</label>
+                <label>Confirm Password:</label>
             </div>
             <div class="col-4">
-                <select id="Location" asp-for="NewCafeUser.Location">
-                    <option value="Leeuwarden">leeuwarden</option>
-                    <option value="Drachten">Drachten</option>
-                    <option value="Heerenveen">Heerenveen</option>
-                </select>
+                <input type="password"
+                       onkeyup="passConfirm();"
+                       name="confirmPassword"
+                       id="confirmPassword" 
+                       required="required" 
+                       minlength="6" 
+                       placeholder="Confirm Password"/>
             </div>
+            <span id="Message"></span>
+        </div>
+        <div class="form-group row"  id="spacing">
             <div class="from-group row">
-                <div class="col-2">
-                    <button type="submit">Registreer</button>
+                <div class="button_space">
+                    <div class="button_space col-2 ">
+                        <button id="registreer" class="btn btn-primary" type="submit">Registreer</button>
+                    </div>
                 </div>
             </div>
         </div>
     </form>
     </div>
-    </div>
-    </body>
-
-
-        @{
-
-            if (@Model.PasswordSame == false)
-            {
-                <script>alert("Passwords did not match and/or was not long enough!\nPlease try again")</script>;
-            }
-        }
-
+</div>
+</body>

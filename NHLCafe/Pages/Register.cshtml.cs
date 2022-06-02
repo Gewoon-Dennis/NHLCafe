@@ -12,8 +12,7 @@ namespace NHLCafe.Pages;
 public class Register : PageModel{
     
     [BindProperty] public CafeUser NewCafeUser { get; set; }
-    [BindProperty] public string PasswordConfirm { get; set; }
-    [BindProperty] public bool PasswordSame { get; set; } = true;
+    [BindProperty] public string Password { get; set; }
     public void OnGet()
     {
         
@@ -23,18 +22,10 @@ public class Register : PageModel{
     {
         NewCafeUser.UniqueGuid = Guid.NewGuid();
         NewCafeUser.Date = DateTime.Today;
-
-        if (NewCafeUser.Password == PasswordConfirm && PasswordConfirm.Length >= 6)
-        {
-            var addCafeUser = new SqlBestand().AddCafeUser(NewCafeUser);
-            return new RedirectToPageResult("Login");
-        }
-        else
-        {
-            PasswordSame = false;
-        }
+        NewCafeUser.Password = Password;
         
-        return null;
+        var addCafeUser = new UserRepository().AddCafeUser(NewCafeUser);
+            return new RedirectToPageResult("Login");
 
     }
 }

@@ -17,8 +17,8 @@ public class AccountOverview : PageModel
     public void OnGet()
     {
         OberId = HttpContext.Session.GetString("LogIn");
-        OberName = new SqlBestand().CafeUsername(OberId);
-        OberWorkplace = new SqlBestand().CafeUserWorkplace(OberId);
+        OberName = new UserRepository().CafeUsername(OberId);
+        OberWorkplace = new UserRepository().CafeUserWorkplace(OberId);
     }
 
     public void OnPostPrint()

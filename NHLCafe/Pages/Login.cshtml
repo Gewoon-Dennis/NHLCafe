@@ -4,12 +4,31 @@
 @{
     ViewData["Title"] = "Login page";
 }
+    <link rel="stylesheet" href="~/css/cardcss.css" asp-append-version="true"/>
+<div class="container border rounded" style="padding: 20px">
+    <form method="post" asp-page-handler="Login">
+        <div class="form-group row" id="spacing">
+            <div class="col-2">
+                <label>E-mail:</label>
+            </div>
+            <div class="col-4">
+                <input type="email" id="Email" required="required" placeholder="E-mail" asp-for="@Model.Email"/>
 
-<form method="post" asp-page-handler="Login">
-    <input type="text" id="UserName" placeholder="UserName" asp-for="@Model.UserName"/><br/>
-    <input type="password" id="Password" placeholder="Password" asp-for="@Model.Password"/><br/>
-    <button type="submit" id="login">Login</button>
-</form>
+            </div>
+        </div>
+
+        <div class="form-group row" id="spacing">
+            <div class="col-2">
+                <label>Password:</label>
+            </div>
+            <div class="col-4">
+                <input type="password" id="Password" required="required" placeholder="Password" asp-for="@Model.Password"/>
+
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit" id="login">Login</button>
+    </form>
+</div>
 
         
         
