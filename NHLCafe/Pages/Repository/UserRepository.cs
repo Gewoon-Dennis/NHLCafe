@@ -7,7 +7,11 @@ namespace NHLCafe.Pages.Repository;
 
 public class UserRepository
 {
-    public string connectionString = "Server=192.168.178.35;" +
+    /*public string connectionString = "Server=192.168.178.35;" +
+                                     "Database=nhlcafe;" +
+                                     "Uid=admin;Pwd=password;" +
+                                     "Port=3306";*/
+    public string connectionString = "Server=192.168.68.109;" +
                                      "Database=nhlcafe;" +
                                      "Uid=admin;Pwd=password;" +
                                      "Port=3306";
