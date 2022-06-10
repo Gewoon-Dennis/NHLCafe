@@ -7,14 +7,14 @@ namespace NHLCafe.Pages.Repository;
 
 public class DrinkRepository
 {
-    /*public string connectionString = "Server=192.168.178.35;" +
-                                     "Database=nhlcafe;" +
-                                     "Uid=admin;Pwd=password;" +
-                                     "Port=3306";*/
-    public string connectionString = "Server=192.168.68.109;" +
+    public string connectionString = "Server=192.168.178.35;" +
                                      "Database=nhlcafe;" +
                                      "Uid=admin;Pwd=password;" +
                                      "Port=3306";
+    /*public string connectionString = "Server=192.168.68.109;" +
+                                     "Database=nhlcafe;" +
+                                     "Uid=admin;Pwd=password;" +
+                                     "Port=3306";*/
     private IDbConnection Connect()
     {
         return new MySqlConnection(connectionString);

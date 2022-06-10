@@ -5,7 +5,17 @@
 }
 
 <div class="text-center">
-    
+
+    <style>
+        .badge {
+          width: 30px;
+          height: 30px;
+          padding: 6px 0px;
+          border-radius: 15px;
+          text-align: center;
+          font-size: 12px;
+        }
+    </style>
     @if (Login.LoggedIn == false)
     {
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -25,7 +35,7 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="Bestellen" role="tabpanel" aria-labelledby="Bestellen-tab">
                 <h2 style="text-align: start">Bestellen</h2>
-                <div>
+                <div style="text-align: left">
                     <div class="btn-group">
                       <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         @Model.Filler
@@ -42,10 +52,6 @@
                                     </form>
                                 }
                             }
-                            <li><button class="dropdown-item">test</button></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            <li><a class="dropdown-item" href="#">Separated link</a></li>
                         </ul>
                     </div>
                 </div>
@@ -147,13 +153,19 @@
                     <div class="col-6">
                         <ul class="list-group">
                             <li class="list-group-item" style="text-align: left; display: flex; justify-content: space-between"><a>Product</a><a>Amount</a></li>
-                            <li class="list-group-item list-group-item-dark"><button class="badge bg-primary rounded-pill">-</button><button class="badge bg-primary rounded-pill">+</button></li>
+                            @*<li class="list-group-item list-group-item-dark"><button class="badge bg-primary rounded-pill">-</button><button class="badge bg-primary rounded-pill">+</button></li>*@
                             @{
                                 if (Model.besteldeItems != null)
                                 {
                                     foreach (var order in Model.besteldeItems)
                                     {
-                                        <li class="list-group-item list-group-item-dark">@order.Name</li>
+                                        <form method="post">
+                                            <input type="hidden" value="@order.ProductId" asp-for="ProductID"/>
+                                            <li class="list-group-item list-group-item-dark" style="text-align: left; display: flex; justify-content: space-between">
+                                                @order.Name
+                                                <div><button class="badge bg-primary rounded-pill" type="submit" asp-page-handler="MinusOne">-</button>@order.hoeveelheid<button class="badge bg-primary rounded-pill" type="submit" asp-page-handler="PlusOne">+</button></div>
+                                            </li>
+                                        </form>
                                     }
                                 }
                             }

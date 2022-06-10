@@ -43,8 +43,40 @@ public class IndexModel : PageModel
         
         bestelling.ProductId = ProductID;
         bestelling.tafelnummer = TafelString;
+        bestelling.hoeveelheid = 1;
         bool AddToORder = new OrderRepository().AddToORder(bestelling);
         if (AddToORder)
+        {
+            besteldeItems = new OrderRepository().GetOrder(TafelString);
+            TafelLijst = new OrderRepository().GetTafels();
+            Frisdranken = new DrinkRepository().GetFrisdranken();
+            WarmeDranken = new DrinkRepository().GetWarmeDranken();
+            Wijnen = new DrinkRepository().GetWijnen();
+            Bieren = new DrinkRepository().GetBier();
+            SpeciaalBieren = new DrinkRepository().GetSpeciaalBier();
+            Filler = TafelString;
+        }
+    }
+
+    public void OnPostMinusOne()
+    {
+        bool minusOne = new OrderRepository().MinusOne(ProductID);
+        if (minusOne)
+        {
+            besteldeItems = new OrderRepository().GetOrder(TafelString);
+            TafelLijst = new OrderRepository().GetTafels();
+            Frisdranken = new DrinkRepository().GetFrisdranken();
+            WarmeDranken = new DrinkRepository().GetWarmeDranken();
+            Wijnen = new DrinkRepository().GetWijnen();
+            Bieren = new DrinkRepository().GetBier();
+            SpeciaalBieren = new DrinkRepository().GetSpeciaalBier();
+            Filler = TafelString;
+        }
+    }
+    public void OnPostPlusOne()
+    {
+        bool plusOne = new OrderRepository().PlusOne(ProductID);
+        if (plusOne)
         {
             besteldeItems = new OrderRepository().GetOrder(TafelString);
             TafelLijst = new OrderRepository().GetTafels();
