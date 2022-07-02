@@ -32,7 +32,7 @@ public class OrderRepository
         using var connection = Connect();
         int Plus = connection.Execute(@"update bestelling
                     set hoeveelheid = hoeveelheid + 1
-                    where ProductId = @product", new {@product = bestelling.ProductId});
+                    where ProductId = @product and tafelnummer = @TafelNummer", new {@product = bestelling.ProductId, @TafelNummer = bestelling.tafelnummer});
         if (Plus != 0)
         {
             return true;
@@ -45,12 +45,12 @@ public class OrderRepository
         return false;
     }
 
-    public bool MinusOne(string ProductID)
+    public bool MinusOne(string ProductID, string Tafelnummer)
     {
         using var connection = Connect();
         int Minus = connection.Execute(@"update bestelling
                     set hoeveelheid = hoeveelheid - 1
-                    where ProductId = @product", new {@product = ProductID});
+                    where ProductId = @product and tafelnummer = @TafelNummer", new {@product = ProductID, @TafelNummer = Tafelnummer});
         if (Minus != 0)
         {
             int check = connection.Execute(@"delete from bestelling where productId = @product and hoeveelheid = '0'",new {@product = ProductID});
@@ -58,12 +58,12 @@ public class OrderRepository
         }
         return false;
     }
-    public bool PlusOne(string ProductID)
+    public bool PlusOne(string ProductID, string Tafelnummer)
     {
         using var connection = Connect();
         int Plus = connection.Execute(@"update bestelling
                     set hoeveelheid = hoeveelheid + 1
-                    where ProductId = @product", new {@product = ProductID});
+                    where ProductId = @product and tafelnummer = @TafelNummer", new {@product = ProductID, @TafelNummer = Tafelnummer});
         if (Plus != 0)
         {
             return true;
@@ -74,7 +74,7 @@ public class OrderRepository
     public IEnumerable<Bestelling> GetOrder(string Tafel)
     {
         using var connection = Connect();
-        return connection.Query<Bestelling>(@"select tafelnummer, bestelling.ProductId, alBetaald, hoeveelheid, product.Name from bestelling
+        return connection.Query<Bestelling>(@"select tafelnummer, bestelling.ProductId, alBetaald, hoeveelheid, product.Name, product.Price from bestelling
                         INNER JOIN product using (ProductId) where tafelnummer = @tafelnummer", new{@tafelnummer = Tafel});
     }
 

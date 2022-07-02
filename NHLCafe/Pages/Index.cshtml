@@ -3,35 +3,36 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
 <div class="text-center">
 
-    <style>
+<style>
         .badge {
           width: 30px;
           height: 30px;
-          padding: 6px 0px;
+          padding: 0px 0px;
           border-radius: 15px;
           text-align: center;
           font-size: 12px;
         }
     </style>
+
     @if (Login.LoggedIn == false)
     {
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="Bestellen-tab" data-bs-toggle="tab" data-bs-target="#Bestellen" type="button" role="tab" aria-controls="Bestellen" aria-selected="true">Bestellen</button>
+                <button href="#bestellen" class="nav-link active" id="Bestellen-tab" data-bs-toggle="tab" data-bs-target="#Bestellen" type="button" role="tab" aria-controls="Bestellen" aria-selected="true">Bestellen</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="Overzicht-tab" data-bs-toggle="tab" data-bs-target="#Overzicht" type="button" role="tab" aria-controls="Overzicht" aria-selected="false">Overzicht</button>
+                <button href="#overzicht" class="nav-link" id="Overzicht-tab" data-bs-toggle="tab" data-bs-target="#Overzicht" type="button" role="tab" aria-controls="Overzicht" aria-selected="false">Overzicht</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="AllesBetalen-tab" data-bs-toggle="tab" data-bs-target="#AllesBetalen" type="button" role="tab" aria-controls="AllesBetalen" aria-selected="false">Alles betalen</button>
+                <button href="#allesbetalen" class="nav-link" id="AllesBetalen-tab" data-bs-toggle="tab" data-bs-target="#AllesBetalen" type="button" role="tab" aria-controls="AllesBetalen" aria-selected="false">Alles betalen</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="PerPersoonBetalen-tab" data-bs-toggle="tab" data-bs-target="#PerPersoonBetalen" type="button" role="tab" aria-controls="PerPersoonBetalen" aria-selected="false">Per persoon betalen</button>
+                <button href="#perbetalen" class="nav-link" id="PerPersoonBetalen-tab" data-bs-toggle="tab" data-bs-target="#PerPersoonBetalen" type="button" role="tab" aria-controls="PerPersoonBetalen" aria-selected="false">Per persoon betalen</button>
             </li>
         </ul>
+       
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="Bestellen" role="tabpanel" aria-labelledby="Bestellen-tab">
                 <h2 style="text-align: start">Bestellen</h2>
@@ -56,6 +57,12 @@
                     </div>
                 </div>
                 <br/>
+                @if (Model.Filler == "Selecteer Tafel")
+                {
+                    <h2>Selecteer een Tafel!</h2>
+                }
+                else{
+                
                 <div class="row">
                     <div class="col-2">
                         <div class="list-group" id="list-tab" role="tablist">
@@ -153,7 +160,6 @@
                     <div class="col-6">
                         <ul class="list-group">
                             <li class="list-group-item" style="text-align: left; display: flex; justify-content: space-between"><a>Product</a><a>Amount</a></li>
-                            @*<li class="list-group-item list-group-item-dark"><button class="badge bg-primary rounded-pill">-</button><button class="badge bg-primary rounded-pill">+</button></li>*@
                             @{
                                 if (Model.besteldeItems != null)
                                 {
@@ -163,20 +169,68 @@
                                             <input type="hidden" value="@order.ProductId" asp-for="ProductID"/>
                                             <li class="list-group-item list-group-item-dark" style="text-align: left; display: flex; justify-content: space-between">
                                                 @order.Name
-                                                <div><button class="badge bg-primary rounded-pill" type="submit" asp-page-handler="MinusOne">-</button>@order.hoeveelheid<button class="badge bg-primary rounded-pill" type="submit" asp-page-handler="PlusOne">+</button></div>
+                                                <div><button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="MinusOne">-</button>@order.hoeveelheid<button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="PlusOne">+</button></div>
                                             </li>
                                         </form>
                                     }
                                 }
                             }
                         </ul>
+                        <div style="text-align: right">
+                            <button type="button" class="btn btn-primary" onclick="$('#Overzicht-tab').trigger('click')">Bestel</button>
+                        </div>
                     </div>
                 </div>
+                }
             </div>
 
 
             <div class="tab-pane fade" id="Overzicht" role="tabpanel" aria-labelledby="Overzicht-tab">
                 <h2 style="text-align: start">Overzicht</h2>
+                <div style="text-align: left">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            @Model.Filler
+                        </button>
+                        <ul class="dropdown-menu">
+                            @{
+                                foreach (var table in Model.TafelLijst)
+                                {
+                                    <form method="post">
+                                        <li>
+                                            <input type="hidden" value="@table.TafelNummer" asp-for="TafelSelect"/>
+                                            <button class="dropdown-item" asp-page-handler="Table">@table.TafelNummer</button>
+                                        </li>
+                                    </form>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <br/>
+                <div class="col-lg-12">
+                    <ul class="list-group">
+                        <li class="list-group-item" style="text-align: left; display: flex; justify-content: space-between;"><a>Product</a><a>Hoeveelheid</a><a>Prijs</a><a>Totaal</a></li>
+                        @{
+                            if (Model.besteldeItems != null)
+                            {
+                                foreach (var order in Model.besteldeItems)
+                                {
+                                    decimal Total = order.Price;
+                                    <form method="post">
+                                        <input type="hidden" value="@order.ProductId" asp-for="ProductID"/>
+                                        <li class="list-group-item list-group-item-dark" style="text-align: left; display: flex; justify-content: space-between">
+                                            <div>@order.Name</div>
+                                            <div><button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="MinusOne">-</button>@order.hoeveelheid<button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="PlusOne">+</button></div>
+                                            <div >@order.Price</div>
+                                            <div> @if (order.hoeveelheid > 1){Total = order.hoeveelheid * order.Price;}@Total</div>
+                                        </li>
+                                    </form>
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
             </div>
 
 

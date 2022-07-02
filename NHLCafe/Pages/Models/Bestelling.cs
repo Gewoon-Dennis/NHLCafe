@@ -7,4 +7,5 @@ public class Bestelling
     public int alBetaald { get; set; }
     public int hoeveelheid { get; set; }
     public string Name { get; set; }
+    public decimal Price { get; set; }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using NHLCafe.Pages.Models;
 using NHLCafe.Pages.Repository;
 
+
 namespace NHLCafe.Pages;
 
 public class IndexModel : PageModel
@@ -38,9 +39,10 @@ public class IndexModel : PageModel
         TafelLijst = new OrderRepository().GetTafels();
     }
 
-    public void OnPostOrder()
+    #region Bestellen pagina
+
+    public async void OnPostOrder()
     {
-        
         bestelling.ProductId = ProductID;
         bestelling.tafelnummer = TafelString;
         bestelling.hoeveelheid = 1;
@@ -60,7 +62,7 @@ public class IndexModel : PageModel
 
     public void OnPostMinusOne()
     {
-        bool minusOne = new OrderRepository().MinusOne(ProductID);
+        bool minusOne = new OrderRepository().MinusOne(ProductID, TafelString);
         if (minusOne)
         {
             besteldeItems = new OrderRepository().GetOrder(TafelString);
@@ -75,7 +77,7 @@ public class IndexModel : PageModel
     }
     public void OnPostPlusOne()
     {
-        bool plusOne = new OrderRepository().PlusOne(ProductID);
+        bool plusOne = new OrderRepository().PlusOne(ProductID, TafelString);
         if (plusOne)
         {
             besteldeItems = new OrderRepository().GetOrder(TafelString);
@@ -101,6 +103,11 @@ public class IndexModel : PageModel
         Bieren = new DrinkRepository().GetBier();
         SpeciaalBieren = new DrinkRepository().GetSpeciaalBier();
     }
+    
+    
+    
+
+    #endregion
 
 }
 //private readonly ILogger<IndexModel> _logger;
