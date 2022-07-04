@@ -1,0 +1,88 @@
+﻿@page
+@model NHLCafe.Pages.Overzicht
+
+@{
+    ViewData["Title"] = "Home page";
+}
+<div class="text-center">
+@if (Login.LoggedIn == false)
+{
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="Index">Bestellen</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="Overzicht">Overzicht</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="AllesBetalen">Alles betalen</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="PPBetalen">Per persoon betalen</a>
+        </li>
+    </ul>
+
+    <h2 style="text-align: start">Overzicht</h2>
+    <div style="text-align: left">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                @IndexModel.TafelString
+            </button>
+            <ul class="dropdown-menu">
+                @{
+                    foreach (var table in Model.TafelLijst)
+                    {
+                        <form method="post">
+                            <li>
+                                <input type="hidden" value="@table.TafelNummer" asp-for="TafelSelect"/>
+                                <button class="dropdown-item" asp-page-handler="Table">@table.TafelNummer</button>
+                            </li>
+                        </form>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+    <br/>
+    @if (@IndexModel.TafelString == "Selecteer Tafel")
+    {
+        <h2>Selecteer een Tafel!</h2>
+    }
+    else
+    {
+        <div class="col-lg-12">
+            <ul class="list-group">
+                <li class="list-group-item" style="text-align: left; display: flex; justify-content: space-between;"><a><strong>Product</strong></a><a><strong>Hoeveelheid</strong></a><a><strong>Prijs</strong></a><a><strong>Totaal</strong></a></li>
+                @{
+                    if (Model.besteldeItems != null)
+                    {
+                        foreach (var order in Model.besteldeItems)
+                        {
+                            decimal Total = order.Price;
+                            <form method="post">
+                                <input type="hidden" value="@order.ProductId" asp-for="ProductID"/>
+                                <li class="list-group-item list-group-item-dark" style="text-align: left; display: flex; justify-content: space-between">
+                                    <div>@order.Name</div>
+                                    <div><button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="MinusOne">-</button>@order.hoeveelheid<button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="PlusOne">+</button></div>
+                                    <div >€@order.Price</div>
+                                    <div>
+                                        @if (order.hoeveelheid > 1)
+                                        {
+                                            Total = order.hoeveelheid * order.Price;
+                                        }
+                                        €@Total</div>
+                                </li>
+                            </form>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+    } 
+}
+else
+{
+    <h1 class="display-4">Welkom</h1><br/>
+    <h2>Jo binne nog net ynlogt!</h2>
+}
+</div>

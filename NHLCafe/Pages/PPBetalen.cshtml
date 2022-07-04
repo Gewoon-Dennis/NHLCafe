@@ -1,0 +1,60 @@
+﻿@page
+@model NHLCafe.Pages.PPBetalen
+
+@{
+    ViewData["Title"] = "Home page";
+}
+<div class="text-center">
+@if (Login.LoggedIn == false)
+{
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="Index">Bestellen</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="Overzicht">Overzicht</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="AllesBetalen">Alles betalen</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="PPBetalen">Per persoon betalen</a>
+        </li>
+    </ul>
+
+    <h2 style="text-align: start">Per persoon betalen</h2>
+    <div style="text-align: left">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                @IndexModel.TafelString
+            </button>
+            <ul class="dropdown-menu">
+                @{
+                    foreach (var table in Model.TafelLijst)
+                    {
+                        <form method="post">
+                            <li>
+                                <input type="hidden" value="@table.TafelNummer" asp-for="TafelSelect"/>
+                                <button class="dropdown-item" asp-page-handler="Table">@table.TafelNummer</button>
+                            </li>
+                        </form>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+    <br/>
+    @if (@IndexModel.TafelString == "Selecteer Tafel")
+    {
+        <h2>Selecteer een Tafel!</h2>
+    }
+    else
+    {
+    }
+}
+else
+{
+    <h1 class="display-4">Welkom</h1><br/>
+    <h2>Jo binne nog net ynlogt!</h2>
+}
+</div>

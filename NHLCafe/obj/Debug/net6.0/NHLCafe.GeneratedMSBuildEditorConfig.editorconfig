@@ -19,6 +19,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudE92ZXJ2aWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Dennis/Documents/GitHub/NHLCafe/NHLCafe/Pages/AllesBetalen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWxsZXNCZXRhbGVuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Dennis/Documents/GitHub/NHLCafe/NHLCafe/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -33,6 +37,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Dennis/Documents/GitHub/NHLCafe/NHLCafe/Pages/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Dennis/Documents/GitHub/NHLCafe/NHLCafe/Pages/Overzicht.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3ZlcnppY2h0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Dennis/Documents/GitHub/NHLCafe/NHLCafe/Pages/PPBetalen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUFBCZXRhbGVuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Dennis/Documents/GitHub/NHLCafe/NHLCafe/Pages/Privacy.cshtml]

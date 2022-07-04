@@ -8,7 +8,6 @@ namespace NHLCafe.Pages;
 
 public class IndexModel : PageModel
 {
-    [BindProperty] public string Filler { get; set; } = "Selecteer Tafel";
     [BindProperty] public string TafelSelect { get; set; }
     [BindProperty] public string ProductID { get; set; }
     [BindProperty] public Bestelling bestelling { get; set; }
@@ -35,8 +34,11 @@ public class IndexModel : PageModel
         Wijnen = new DrinkRepository().GetWijnen();
         Bieren = new DrinkRepository().GetBier();
         SpeciaalBieren = new DrinkRepository().GetSpeciaalBier();
-        Filler = TafelString;
         TafelLijst = new OrderRepository().GetTafels();
+        if (TafelString != "Selecteer Tafel")
+        {
+            besteldeItems = new OrderRepository().GetOrder(TafelString);  
+        }
     }
 
     #region Bestellen pagina
@@ -56,7 +58,6 @@ public class IndexModel : PageModel
             Wijnen = new DrinkRepository().GetWijnen();
             Bieren = new DrinkRepository().GetBier();
             SpeciaalBieren = new DrinkRepository().GetSpeciaalBier();
-            Filler = TafelString;
         }
     }
 
@@ -72,7 +73,6 @@ public class IndexModel : PageModel
             Wijnen = new DrinkRepository().GetWijnen();
             Bieren = new DrinkRepository().GetBier();
             SpeciaalBieren = new DrinkRepository().GetSpeciaalBier();
-            Filler = TafelString;
         }
     }
     public void OnPostPlusOne()
@@ -87,15 +87,13 @@ public class IndexModel : PageModel
             Wijnen = new DrinkRepository().GetWijnen();
             Bieren = new DrinkRepository().GetBier();
             SpeciaalBieren = new DrinkRepository().GetSpeciaalBier();
-            Filler = TafelString;
         }
     }
     public void OnPostTable()
     {
         TafelString = TafelSelect;
-        Filler = TafelString;
         
-        besteldeItems = new OrderRepository().GetOrder(TafelSelect);
+        besteldeItems = new OrderRepository().GetOrder(TafelString);
         TafelLijst = new OrderRepository().GetTafels();
         Frisdranken = new DrinkRepository().GetFrisdranken();
         WarmeDranken = new DrinkRepository().GetWarmeDranken();
