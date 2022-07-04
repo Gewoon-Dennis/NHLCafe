@@ -7,20 +7,27 @@
 <div class="text-center">
 @if (Login.LoggedIn == false)
 {
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="Index">Bestellen</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="Overzicht">Overzicht</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="AllesBetalen">Alles betalen</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " href="PPBetalen">Per persoon betalen</a>
-        </li>
-    </ul>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index"></a>
+               <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="options">
+                    <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link" href="Index">Bestellen</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Overzicht">Overzicht</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="AllesBetalen">Alles betalen</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="PPBetalen">Per persoon betalen</a>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+        </nav>
 
     <h2 style="text-align: start">Alles Betalen</h2>
     <div style="text-align: left">

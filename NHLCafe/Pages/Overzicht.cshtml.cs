@@ -9,6 +9,7 @@ public class Overzicht : PageModel
 {
     [BindProperty] public string TafelSelect { get; set; }
     [BindProperty] public string ProductID { get; set; }
+    [BindProperty] public decimal AllesTotaal { get; set; }
     public IEnumerable<Tafel> TafelLijst { get; set; }
     
     public IEnumerable<Bestelling> besteldeItems { get; set; }
