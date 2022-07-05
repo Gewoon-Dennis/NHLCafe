@@ -9,6 +9,8 @@ public class PPBetalen : PageModel
 {
     [BindProperty] public string TafelSelect { get; set; }
     [BindProperty] public decimal AllesTotaal { get; set; }
+    [BindProperty] public decimal PPTotaal { get; set; }
+    public static bool BetalingSucces = false;
 
     [BindProperty] public string ProductID { get; set; }
     public IEnumerable<Tafel> TafelLijst { get; set; }
@@ -32,13 +34,42 @@ public class PPBetalen : PageModel
         
     }
 
-    public void PlusPP()
+    public void OnPostPlusPP()
     {
-        
+        bool Plus = new OrderRepository().PlusBetalen(ProductID, IndexModel.TafelString);
+        if (Plus)
+        {
+            besteldeItems = new OrderRepository().GetOrder(IndexModel.TafelString);
+            TafelLijst = new OrderRepository().GetTafels();
+        }
     }
 
-    public void MinPP()
+    public void OnPostMinPP()
     {
-        
+        bool Min = new OrderRepository().MinBetalen(ProductID, IndexModel.TafelString);
+        if (Min)
+        {
+            besteldeItems = new OrderRepository().GetOrder(IndexModel.TafelString);
+            TafelLijst = new OrderRepository().GetTafels();
+        }
+    }
+    public void OnPostBetalen()
+    {
+        BetalingSucces = new OrderRepository().PaySeperate(IndexModel.TafelString);
+        besteldeItems = new OrderRepository().GetOrder(IndexModel.TafelString);
+        TafelLijst = new OrderRepository().GetTafels();
+    }
+
+    public RedirectToPageResult OnPostBestellen()
+    {
+        bool Delete = new OrderRepository().Delete(IndexModel.TafelString);
+        if (Delete == true)
+        {
+            IndexModel.TafelString = "Selecteer Tafel";
+            BetalingSucces = false;
+            return new RedirectToPageResult("Index");
+        }
+
+        return null;
     }
 }

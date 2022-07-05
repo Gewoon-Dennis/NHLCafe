@@ -48,6 +48,7 @@ public class IndexModel : PageModel
         bestelling.ProductId = ProductID;
         bestelling.tafelnummer = TafelString;
         bestelling.hoeveelheid = 1;
+        bestelling.aantalBetalen = 0;
         bool AddToORder = new OrderRepository().AddToORder(bestelling);
         if (AddToORder)
         {

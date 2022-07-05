@@ -46,6 +46,7 @@ public class AllesBetalen : PageModel
         if (Delete == true)
         {
             IndexModel.TafelString = "Selecteer Tafel";
+            PPBetalen.BetalingSucces = false;
             return new RedirectToPageResult("Index");
         }
 

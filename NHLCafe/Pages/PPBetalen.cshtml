@@ -5,7 +5,7 @@
     ViewData["Title"] = "Home page";
 }
 <div class="text-center">
-@if (Login.LoggedIn == false)
+@if (Login.LoggedIn == true)
 {
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white box-shadow mb-3">
             <div class="container">
@@ -61,7 +61,7 @@
             <ul class="list-group">
                 <li class="list-group-item" style="text-align: left; display: flex;">
                     <div class="col-5"><strong>Product</strong></div>
-                    <div class="col-3"><strong>Hoeveelheid</strong></div>
+                    <div class="col-3"><strong>Aantal</strong></div>
                     <div class="col-2"><strong>Prijs</strong></div>
                     <div class="col-2"><strong>Totaal</strong></div>
                 </li>
@@ -70,26 +70,54 @@
                     {
                         foreach (var order in Model.besteldeItems)
                         {
-                            decimal Total = order.Price;
+                            decimal Total = 0;
+                            Model.AllesTotaal += order.Price * (order.hoeveelheid - order.alBetaald);
                             <form method="post">
                                 <input type="hidden" value="@order.ProductId" asp-for="ProductID"/>
                                 <li class="list-group-item list-group-item-dark" style="text-align: left; display: flex;">
                                     <div class="col-5">@order.Name</div>
                                     <div class="col-3">
-                                        <button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="PlusPP">-</button>
-                                        @order.hoeveelheid
-                                        <button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="MinPP">+</button>
-                                    </div>
-                                    <div class="col-2">€@order.Price</div>
-                                    <div class="col-2">
-                                        @if (order.hoeveelheid > 1)
+                                        @if (order.aantalBetalen == 0)
                                         {
-                                            Total = order.hoeveelheid * order.Price;
-                                            Model.AllesTotaal += Total;
+                                            <a style="color: green">
+                                                <button class="badge bg-dark rounded-pill" disabled type="submit" asp-page-handler="MinPP">-</button>
+                                                @order.aantalBetalen
+                                                @if (order.aantalBetalen == (order.hoeveelheid - order.alBetaald))
+                                                {
+                                                    <button class="badge bg-dark rounded-pill" disabled type="submit" asp-page-handler="PlusPP">+</button>  
+                                                }
+                                                else
+                                                {
+                                                    <button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="PlusPP">+</button>
+                                                }
+                                                van @order.hoeveelheid
+                                            </a>
+                                        }
+                                        else if (order.aantalBetalen == order.hoeveelheid || order.aantalBetalen == (order.hoeveelheid - order.alBetaald))
+                                        {
+                                            <a style="color: green">
+                                                <button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="MinPP">-</button>
+                                                @order.aantalBetalen
+                                                <button class="badge bg-dark rounded-pill" disabled type="submit" asp-page-handler="PlusPP">+</button>
+                                                van @order.hoeveelheid
+                                            </a>
                                         }
                                         else
                                         {
-                                            Model.AllesTotaal += order.Price;
+                                            <a style="color: green">
+                                                <button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="MinPP">-</button>
+                                                @order.aantalBetalen
+                                                <button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="PlusPP">+</button>
+                                                van @order.hoeveelheid
+                                            </a> 
+                                        }
+                                    </div>
+                                    <div class="col-2">€@order.Price</div>
+                                    <div class="col-2">
+                                        @if (order.aantalBetalen > 0)
+                                        {
+                                            Total = order.aantalBetalen * order.Price;
+                                            Model.PPTotaal += Total;
                                         }
                                         €@Total
                                     </div>
@@ -103,9 +131,47 @@
         <ul class="list-group">
             <li class="list-group-item" style="display: flex; text-align: left">
                 <div class="col-10"><strong>Te Betalen:</strong></div>
+                <div class="col"><strong>€@Model.PPTotaal</strong></div>
+            </li>
+        </ul>
+        <ul class="list-group">
+            <li class="list-group-item" style="display: flex; text-align: left">
+                <div class="col-10"><strong>In totaal nog te betalen:</strong></div>
                 <div class="col"><strong>€@Model.AllesTotaal</strong></div>
             </li>
         </ul>
+        <br/>
+        if (@PPBetalen.BetalingSucces == false)
+        {
+            <form method="post">
+                <div style="text-align: right">
+                    <button type="submit" class="btn btn-primary" asp-page-handler="Betalen">Betalen</button>
+                </div> 
+            </form>
+        }
+        else
+        {
+            if (Model.AllesTotaal == 0)
+            {
+                <div style="text-align: right">
+                    <a style="color: green"> Betaling Geslaagd :) </a>
+                    <form method="post">
+                        <button type="submit" class="btn btn-primary" asp-page-handler="Bestellen">Terug naar bestellen</button>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <div style="text-align: right">
+                    <a style="color: green"> Betaling Geslaagd :) </a> <br/>
+                    <a class="btn btn-primary" href="AllesBetalen">Naar alles Betalen</a> <br/><br/>
+                    <form method="post">
+                       <button type="submit" class="btn btn-primary" asp-page-handler="Betalen">Nogmaals Betalen</button>
+                    </form>
+                </div>
+            }
+            
+        }
     }
 }
 else
