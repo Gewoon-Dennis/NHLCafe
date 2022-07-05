@@ -8,6 +8,8 @@ namespace NHLCafe.Pages;
 public class PPBetalen : PageModel
 {
     [BindProperty] public string TafelSelect { get; set; }
+    [BindProperty] public decimal AllesTotaal { get; set; }
+
     [BindProperty] public string ProductID { get; set; }
     public IEnumerable<Tafel> TafelLijst { get; set; }
     
@@ -27,6 +29,16 @@ public class PPBetalen : PageModel
         
         besteldeItems = new OrderRepository().GetOrder(IndexModel.TafelString);
         TafelLijst = new OrderRepository().GetTafels();
+        
+    }
+
+    public void PlusPP()
+    {
+        
+    }
+
+    public void MinPP()
+    {
         
     }
 }

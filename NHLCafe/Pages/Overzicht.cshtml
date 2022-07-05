@@ -8,7 +8,7 @@
 <div class="text-center">
 @if (Login.LoggedIn == false)
 {
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white box-shadow mb-3">
         <div class="container">
             <a class="navbar-brand" asp-area="" asp-page="/Index"></a>
            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="options">
@@ -102,8 +102,11 @@
                 <div class="col"><strong>€@Model.AllesTotaal</strong></div>
             </li>
         </ul>
-             
-        
+        <br/>
+        <div style="text-align: right;">
+            <a type="button" class="btn btn-primary" href="AllesBetalen">Alles betalen</a>
+            <a type="button" class="btn btn-primary" href="PPBetalen">Betalen per persoon</a>
+        </div>
     } 
 }
 else

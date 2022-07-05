@@ -2,6 +2,7 @@
 using Dapper;
 using MySql.Data.MySqlClient;
 using NHLCafe.Pages.Models;
+using Org.BouncyCastle.Crypto;
 
 namespace NHLCafe.Pages.Repository;
 
@@ -76,6 +77,28 @@ public class OrderRepository
         using var connection = Connect();
         return connection.Query<Bestelling>(@"select tafelnummer, bestelling.ProductId, alBetaald, hoeveelheid, product.Name, product.Price from bestelling
                         INNER JOIN product using (ProductId) where tafelnummer = @tafelnummer", new{@tafelnummer = Tafel});
+    }
+
+    public bool PayAll(string tafel)
+    {
+        using var connection = Connect();
+        int Pay = connection.Execute(@"update bestelling set alBetaald = hoeveelheid where tafelnummer = @tafelNummer", new{@tafelNummer = tafel});
+        if (Pay != 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    public bool Delete(string Tafelnummer)
+    {
+        using var connection = Connect();
+        int Minus = connection.Execute(@"delete from bestelling where tafelnummer = @TafelNummer", new {@TafelNummer = Tafelnummer});
+        if (Minus != 0)
+        {
+            return true;
+        }
+        return false;
     }
 
 }

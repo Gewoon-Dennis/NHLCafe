@@ -7,7 +7,7 @@
 <div class="text-center">
 @if (Login.LoggedIn == false)
 {
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index"></a>
                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="options">
@@ -57,6 +57,55 @@
     }
     else
     {
+        <div class="col-12">
+            <ul class="list-group">
+                <li class="list-group-item" style="text-align: left; display: flex;">
+                    <div class="col-5"><strong>Product</strong></div>
+                    <div class="col-3"><strong>Hoeveelheid</strong></div>
+                    <div class="col-2"><strong>Prijs</strong></div>
+                    <div class="col-2"><strong>Totaal</strong></div>
+                </li>
+                @{
+                    if (Model.besteldeItems != null)
+                    {
+                        foreach (var order in Model.besteldeItems)
+                        {
+                            decimal Total = order.Price;
+                            <form method="post">
+                                <input type="hidden" value="@order.ProductId" asp-for="ProductID"/>
+                                <li class="list-group-item list-group-item-dark" style="text-align: left; display: flex;">
+                                    <div class="col-5">@order.Name</div>
+                                    <div class="col-3">
+                                        <button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="PlusPP">-</button>
+                                        @order.hoeveelheid
+                                        <button class="badge bg-dark rounded-pill" type="submit" asp-page-handler="MinPP">+</button>
+                                    </div>
+                                    <div class="col-2">€@order.Price</div>
+                                    <div class="col-2">
+                                        @if (order.hoeveelheid > 1)
+                                        {
+                                            Total = order.hoeveelheid * order.Price;
+                                            Model.AllesTotaal += Total;
+                                        }
+                                        else
+                                        {
+                                            Model.AllesTotaal += order.Price;
+                                        }
+                                        €@Total
+                                    </div>
+                                </li>
+                            </form>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" style="display: flex; text-align: left">
+                <div class="col-10"><strong>Te Betalen:</strong></div>
+                <div class="col"><strong>€@Model.AllesTotaal</strong></div>
+            </li>
+        </ul>
     }
 }
 else

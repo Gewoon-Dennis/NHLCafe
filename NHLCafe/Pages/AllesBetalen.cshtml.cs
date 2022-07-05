@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NHLCafe.Pages.Models;
 using NHLCafe.Pages.Repository;
+using Org.BouncyCastle.Asn1;
 
 namespace NHLCafe.Pages;
 
@@ -9,6 +10,8 @@ public class AllesBetalen : PageModel
 {
     [BindProperty] public string TafelSelect { get; set; }
     [BindProperty] public string ProductID { get; set; }
+    [BindProperty] public decimal AllesTotaal { get; set; }
+    [BindProperty] public bool BetalingSucces { get; set; } = false;
     public IEnumerable<Tafel> TafelLijst { get; set; }
     
     public IEnumerable<Bestelling> besteldeItems { get; set; }
@@ -28,5 +31,24 @@ public class AllesBetalen : PageModel
         besteldeItems = new OrderRepository().GetOrder(IndexModel.TafelString);
         TafelLijst = new OrderRepository().GetTafels();
         
+    }
+
+    public void OnPostBetalen()
+    {
+        BetalingSucces = new OrderRepository().PayAll(IndexModel.TafelString);
+        besteldeItems = new OrderRepository().GetOrder(IndexModel.TafelString);
+        TafelLijst = new OrderRepository().GetTafels();
+    }
+
+    public RedirectToPageResult OnPostBestellen()
+    {
+        bool Delete = new OrderRepository().Delete(IndexModel.TafelString);
+        if (Delete == true)
+        {
+            IndexModel.TafelString = "Selecteer Tafel";
+            return new RedirectToPageResult("Index");
+        }
+
+        return null;
     }
 }
